@@ -4,7 +4,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 size_t	ft_strlen(const char *s);
-char	*ft_strjoin(char *s1, char *s2);
-char *ft_read(char *str, int *i);
+char	*ft_strjoin(char **s1, char *s2);
+char *ft_read(char *str, int *i, char *line1);
 char	*get_next_line(int fd);
+char *init_line(char **line);
 #endif

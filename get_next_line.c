@@ -14,54 +14,84 @@
 #include"fcntl.h"
 #include"stdio.h"
 
+char *init_line(char **line)
+{
+	*line = (char *)malloc(1);
+	if (*line == NULL)
+		return (NULL);
+	else
+		{
+			(*line)[0] = '\0';
+			return (*line);
+		}
+}
+
+
+int part(int fd, char *str, char *line1, int *position)
+{
+	int size_str;
+	
+	size_str = read(fd, str, BUFFER_SIZE);
+	if (size_str <= 0)
+	{
+		if (line1 != NULL && line1[0] == '\0')
+		{
+			free(line1);
+			return (0);
+		}
+		else
+		return (1);
+	}
+	else
+	{
+		str[size_str] = '\0';
+		*position = 0;
+		return (2);
+	}
+}
+
+int find_me(const char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] != '\0')
+	{
+		if (line[i] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+
 char * get_next_line(int fd)
 {
 	static char str[BUFFER_SIZE + 1];
 	char	*line1;
 	char	*line2;
 	static int position;
-	
-	line1 = (char *)malloc(1);
-	if (line1 == NULL)
+	int	x;/////////
+
+	if (init_line(&line1) == NULL)
 		return (NULL);
-	else
-		line1[0] = '\0';
-	while (1)
+	while (find_me(line1) == 0)
 	{
 		if (str[position] == '\0')
 		{
-			int size_str = read(fd, str, BUFFER_SIZE);
-			if (size_str <= 0)
-				{
-					if (line1 != NULL && line1[0] == '\0')
-					{
-						free(line1);
-						return (NULL);
-					}
-					else
-						return (line1);
-				}
-			else
-			{
-				str[size_str] = '\0';
-				position = 0;
-			}
-		}
-		line2 = ft_read(str, &position);
-		if (line2 == NULL)
-		{
-			free(line1);
-			return (NULL);
-		}
-		else
-			line1 = ft_strjoin(line1, line2);
-		if (line1 == NULL)
-			return (NULL);
-		if (line1[ft_strlen(line1) - 1] == '\n')
+			x = part(fd, str, line1, &position);
+			if (x == 0)
+				return (NULL);
+			else if (x == 1)
 				return (line1);
-		else
-			continue ;
+		}
+		line2 = ft_read(str, &position, line1);
+		if (line2 == NULL)
+			return (NULL);
+		if (ft_strjoin(&line1, line2) == NULL)
+			return (NULL);
 	}
+	return (line1);
 }
 
 // int main()
