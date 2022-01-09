@@ -6,7 +6,7 @@
 /*   By: cayesha <cayesha@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 17:10:13 by cayesha           #+#    #+#             */
-/*   Updated: 2021/11/20 19:14:43 by cayesha          ###   ########.fr       */
+/*   Updated: 2022/01/09 15:44:32 by cayesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,15 @@ char	*ft_strjoin(char **s1, char *s2)
 	str[count] = '\0';
 	free((*s1));
 	free(s2);
-	*s1 = str; 
+	*s1 = str;
 	return (str);
 }
 
-char *ft_read(char *str, int *i, char *line1)
+char	*ft_read(char *str, int *i, char *line1)
 {
 	int		j;
 	char	*line;
-	int	last_i;
+	int		last_i;
 
 	last_i = 0;
 	j = *i;
@@ -69,10 +69,10 @@ char *ft_read(char *str, int *i, char *line1)
 		j++;
 	line = (char *)malloc(j - *i + 1);
 	if (line == NULL)
-		{
-			free(line1);
-			return line;
-		}
+	{
+		free(line1);
+		return (line);
+	}
 	while (*i != j)
 	{
 		line[last_i] = str[*i];

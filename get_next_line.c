@@ -6,7 +6,7 @@
 /*   By: cayesha <cayesha@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 17:17:54 by cayesha           #+#    #+#             */
-/*   Updated: 2021/11/26 19:48:25 by cayesha          ###   ########.fr       */
+/*   Updated: 2022/01/09 15:43:05 by cayesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,22 @@
 #include"fcntl.h"
 #include"stdio.h"
 
-char *init_line(char **line)
+char	*init_line(char **line)
 {
 	*line = (char *)malloc(1);
 	if (*line == NULL)
 		return (NULL);
 	else
-		{
-			(*line)[0] = '\0';
-			return (*line);
-		}
+	{
+		(*line)[0] = '\0';
+		return (*line);
+	}
 }
 
-
-int part(int fd, char *str, char *line1, int *position)
+int	part(int fd, char *str, char *line1, int *position)
 {
-	int size_str;
-	
+	int	size_str;
+
 	size_str = read(fd, str, BUFFER_SIZE);
 	if (size_str <= 0)
 	{
@@ -40,7 +39,7 @@ int part(int fd, char *str, char *line1, int *position)
 			return (0);
 		}
 		else
-		return (1);
+			return (1);
 	}
 	else
 	{
@@ -50,7 +49,7 @@ int part(int fd, char *str, char *line1, int *position)
 	}
 }
 
-int find_me(const char *line)
+int	find_me(const char *line)
 {
 	int	i;
 
@@ -64,14 +63,13 @@ int find_me(const char *line)
 	return (0);
 }
 
-
-char * get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	static char str[BUFFER_SIZE + 1];
-	char	*line1;
-	char	*line2;
-	static int position;
-	int	x;/////////
+	static char	str[BUFFER_SIZE + 1];
+	char		*line1;
+	char		*line2;
+	static int	position;
+	int			x;
 
 	if (init_line(&line1) == NULL)
 		return (NULL);
@@ -93,16 +91,3 @@ char * get_next_line(int fd)
 	}
 	return (line1);
 }
-
-// int main()
-// {
-
-// 	int fd = open("test.txt", O_RDONLY);
-// 	char *str = get_next_line(fd);
-// 	while(str != NULL)
-// 	{
-// 		printf("%s", str);
-// 		str = get_next_line(fd);
-// 	}
-	
-// }
